@@ -87,7 +87,7 @@ namespace ImageApi.Services
                 await this.processUrlGroups(groupedUrls[i], httpClient);
             }
 
-            // Await for pending locak storage saving taks
+            // Await for pending tasks involving local storage write
             Task.WaitAll(this.awaitingTasks.ToArray());
             
             return new DownloadImageResponseModel(){

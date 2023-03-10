@@ -32,8 +32,17 @@ namespace ImageApi.Controllers
         [HttpGet("{imageName}")]
         public async Task<IActionResult> GetImage ([FromRoute] string imageName)
         {
-            var imageBase64 = _imageService.GetImageByName(imageName);
-            return Ok(imageBase64);
+            try
+            {
+                var imageBase64 = _imageService.GetImageByName(imageName);
+                return Ok(imageBase64);                
+            }
+            catch (System.Exception exception)
+            {
+                if (exception is System.IO.FileNotFoundException)
+                    return BadRequest();
+                throw exception;
+            }
         }
     }
 }

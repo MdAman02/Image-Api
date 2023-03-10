@@ -1,3 +1,5 @@
+using System;
+using System.IO;
 using ImageApi.Services;
 
 namespace ImageApi;
@@ -18,6 +20,11 @@ public class Program
         builder.Services.AddScoped<IImageService, ImageService>();
 
         var app = builder.Build();
+
+        var dir = Environment.CurrentDirectory;
+        bool imageDirectoryExists = Directory.Exists(Path.Combine(dir, "images"));
+        if (!imageDirectoryExists)
+            Directory.CreateDirectory(Path.Combine(dir, "images"));
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
